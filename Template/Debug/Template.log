@@ -1,0 +1,5 @@
+﻿  main.cpp
+C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\Template\main.cpp(70,12): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
+C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\Template\main.cpp(110,12): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
+C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\Template\main.cpp(138,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Template.vcxproj -> C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\Debug\Template.exe
