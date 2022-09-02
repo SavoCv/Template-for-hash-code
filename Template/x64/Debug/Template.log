@@ -1,12 +1,2 @@
-﻿  main.cpp
-C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\Template\main.cpp(57,12): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
-C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\Template\main.cpp(128,12): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
-C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\Template\main.cpp(191,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-main.obj : error LNK2019: unresolved external symbol "public: __cdecl Data::Data(int)" (??0Data@@QEAA@H@Z) referenced in function "void __cdecl solve_all(void)" (?solve_all@@YAXXZ)
-main.obj : error LNK2019: unresolved external symbol "public: void __cdecl Data::read(void)" (?read@Data@@QEAAXXZ) referenced in function "void __cdecl solve_all(void)" (?solve_all@@YAXXZ)
-main.obj : error LNK2019: unresolved external symbol "public: bool __cdecl Solution::is_better_than(class Solution const &)const " (?is_better_than@Solution@@QEBA_NAEBV1@@Z) referenced in function "class Solution __cdecl solve(class Data const &,int)" (?solve@@YA?AVSolution@@AEBVData@@H@Z)
-main.obj : error LNK2019: unresolved external symbol "public: __int64 __cdecl Solution::get_score(void)const " (?get_score@Solution@@QEBA_JXZ) referenced in function "void __cdecl solve_all(void)" (?solve_all@@YAXXZ)
-main.obj : error LNK2019: unresolved external symbol "public: void __cdecl Solution::write(void)const " (?write@Solution@@QEBAXXZ) referenced in function "void __cdecl solve_all(void)" (?solve_all@@YAXXZ)
-main.obj : error LNK2001: unresolved external symbol "public: virtual class Solution __cdecl BasicSolver::solve(class Data const &)" (?solve@BasicSolver@@UEAA?AVSolution@@AEBVData@@@Z)
-main.obj : error LNK2019: unresolved external symbol "public: __cdecl BasicOptimiser::BasicOptimiser(int)" (??0BasicOptimiser@@QEAA@H@Z) referenced in function "void __cdecl solve_all(void)" (?solve_all@@YAXXZ)
-C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\x64\Debug\Template.exe : fatal error LNK1120: 7 unresolved externals
+﻿  BasicOptimiser.cpp
+  Template.vcxproj -> C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\x64\Debug\Template.exe

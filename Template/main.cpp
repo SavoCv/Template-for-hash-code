@@ -1,6 +1,7 @@
 //#include <bits/stdc++.h>
 #include <vector>
 #include <thread>
+#include <Windows.h>
 #include "Data.h"
 #include "Solver.h"
 #include "BasicSolver.h"
@@ -8,7 +9,6 @@
 #include "Parameters.h"
 #include "Optimiser.h"
 #include "BasicOptimiser.h"
-#include <Windows.h>
 
 using namespace std;
 
