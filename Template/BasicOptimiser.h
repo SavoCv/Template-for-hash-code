@@ -1,12 +1,18 @@
 #pragma once
 #include "Optimiser.h"
+#include "Solution.h"
 
 class BasicOptimiser : public Optimiser
 {
-public:
-	BasicOptimiser(int num_of_threads);
+	Solution copy;
+	Solution& original;
 
-	void start();
+	void optimise();
+
+	thread thr;
+
+public:
+	BasicOptimiser(Solution& s);
 
 	void join();
 };

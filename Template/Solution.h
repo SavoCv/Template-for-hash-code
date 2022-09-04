@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "Random.h"
 using namespace std;
 
 typedef long long Score;
@@ -21,11 +22,20 @@ public:
 
 	void write() const;
 
-	void lock(); // u optimiseru kada naidjemo resenje prvo lokujemo zatim proverimo da li je i dalje najbolje resenje i ako jeste onda izvrsimo swap pa onda unlokujemo
+	void lock_for_write(); // u optimiseru kada naidjemo resenje prvo lokujemo zatim proverimo da li je i dalje najbolje resenje i ako jeste onda izvrsimo swap pa onda unlokujemo
 
-	void unlock();
+	void unlock_for_write();
+
+	void lock_for_read();
+
+	void unlock_for_read();
 
 	void do_swap(Swap swp);
+
+	static const bool undo_exists = false;
+	void undo_swap(Swap swp);
+
+	Swap get_rand_swap(Random& rnd);
 
 	friend ostream& operator<<(ostream& os, const Solution& a);
 	friend istream& operator>>(istream& is, Solution& a);

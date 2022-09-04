@@ -9,7 +9,6 @@
 #include "Parameters.h"
 #include "Optimiser.h"
 #include "BasicOptimiser.h"
-
 using namespace std;
 
 #define endl "\n"
@@ -20,60 +19,25 @@ typedef vector<int> vi;
 typedef long long ll;
 typedef pair<int, int> pii;
 
-struct Res
-{
+//broj testova
+const int num_of_tests = 6;
 
-};
+//da li se pokrece za sve
+const bool run_all = true;
 
-Res best;
+//ako se ne pokrece za sve za koji se pokrece
+const int which_to_start = 2;
 
-bool isValid(const Res& res)
-{
-    //TO DO
-    return true;
-}
+//vreme u sekundama po svakom primeru
+const int time_for_each_case = 3;
 
-void doRandomSwap(Res& res)
-{
-    //TO DO
-}
+//Globalne promenljive
+mutex output_mutex;
 
-int scoreRes(const Res& res)
-{
-    //TO DO
-    return 0;
-}
+//Ovom promenljivom prekinuti sve cikluse sto pre
+bool is_interupted = false;
 
-bool isBetter(const Res& res)
-{
-    //TO DO
-    return false;
-}
-
-
-int optimisation(int vreme = 10)
-{
-    static Res r;
-    r = best;
-    int pt = time(0);
-    int best_score = scoreRes(best), tmp;
-    int p_score = best_score;
-    while (time(0) - pt < vreme)
-    {
-        doRandomSwap(r);
-        if (isValid(r) && (tmp = scoreRes(r)) >= best_score) {
-            best = r;
-            best_score = tmp;
-        }
-        else {
-            r = best;
-            // moze i funkcija undoLastSwap(r) koja bi mogla brze da radi
-        }
-    }
-    cout << "Optimizacija: " << (tmp = scoreRes(best) - p_score) << endl;
-    cout << "Vreme: " << time(0) - pt << endl;
-    return tmp;
-}
+const int max_num_of_optimisers = 100;
 
 void set_i_begin_end(int& i_begin, int& i_end) // konacno
 {
@@ -122,6 +86,44 @@ Solution solve(const Data& d, int i) //konacno
     return solution;
 }
 
+const int num_of_optimisers = 1;
+Optimiser** create_optimisers(Solution& solution)
+{
+    Optimiser** optimisers;
+    optimisers = new Optimiser * [num_of_optimisers];
+    optimisers[0] = new BasicOptimiser(solution);
+    optimisers[1] = new BasicOptimiser(solution);
+    //Dodati ako postoje jos optimisera
+
+    return optimisers;
+}
+
+void optimise(Solution& solution, int i)
+{
+    Optimiser** optimisers;
+
+    optimisers = create_optimisers(solution);
+
+    for (int k = 0; k < time_for_each_case; ++k)
+    {
+        if (GetKeyState('S') & 0x8000)
+        {
+            solution.lock_for_read();
+            solution.write();
+            solution.unlock_for_read();
+            cout << "Saved" << endl;
+        }
+        this_thread::sleep_for(1000ms);
+    }
+
+    is_interupted = true;
+    for (int j = 0; j < num_of_optimisers; ++j)
+        optimisers[j]->join();
+
+    for (int j = 0; j < num_of_optimisers; ++j)
+        delete optimisers[j];
+}
+
 void solve_all() //konacno
 {
     long long score = 0;
@@ -141,32 +143,8 @@ void solve_all() //konacno
         Score score_bf_opt = solution.get_score();
         cout << i << ". score before optimisation: " << score_bf_opt << endl;
 
-        const int num_of_optimisers = 1;
-        Optimiser* optimisers[1];
+        optimise(solution, i);
         
-        optimisers[0] = new BasicOptimiser(4);
-        for (int j = 0; j < num_of_optimisers; ++j)
-        {
-            optimisers[j]->start(); 
-        }
-        
-        for (int k = 0; k < time_for_each_case; ++k)
-        {
-            if (GetKeyState('s') & 1)
-            {
-                is_interupted = true;
-                for (int j = 0; j < num_of_optimisers; ++j) {
-                    optimisers[j]->join();
-                }
-                solution.write();
-                cout << "Saved" << endl;
-            }
-            this_thread::sleep_for(1000ms);
-        }
-
-        is_interupted = true;
-        for (int j = 0; j < num_of_optimisers; ++j)
-            optimisers[j]->join();
         solution.write();
 
         Score fin_scr = solution.get_score();
@@ -174,9 +152,6 @@ void solve_all() //konacno
         opt += fin_scr - score_bf_opt;
         cout << i << ". score: " << fin_scr << endl;
         score += fin_scr;
-
-        for (int j = 0; j < num_of_optimisers; ++j)
-            delete optimisers[j];
 
         cout << endl << endl;
     }
@@ -192,12 +167,6 @@ int main()
     srand(time(0));
     
     solve_all();
-
-
-    //thread t(solveAll);
-    //solveAll();
-
-    //t.join();
 
     return 0;
 }

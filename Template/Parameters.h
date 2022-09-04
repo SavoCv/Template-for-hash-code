@@ -1,23 +1,24 @@
 #pragma once
 #include <mutex>
-//Parametri i globalne promenljive
+//Parametri i globalne promenljive, definisu se na pocetku main
 
 //broj testova
-const int num_of_tests = 6;
+extern const int num_of_tests;
 
 //da li se pokrece za sve
-const bool run_all = true;
+extern const bool run_all;
 
 //ako se ne pokrece za sve za koji se pokrece
-const int which_to_start = 2;
+extern const int which_to_start;
 
 //vreme u sekundama po svakom primeru
-const int time_for_each_case = 30;
+extern const int time_for_each_case;
 
 //Globalne promenljive
-mutex output_mutex;
+extern mutex output_mutex;
 
 //Ovom promenljivom prekinuti sve cikluse sto pre
-bool is_interupted = false;
+extern bool is_interupted;
 
-const int max_num_of_optimisers = 100;
+extern const int max_num_of_optimisers;
+
