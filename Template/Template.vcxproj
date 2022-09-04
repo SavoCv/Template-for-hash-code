@@ -144,6 +144,7 @@
     <ClCompile Include="BasicSolver.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="Optimiser.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Solution.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Solver.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Data.h" />
     <ClInclude Include="Optimiser.h" />
     <ClInclude Include="Parameters.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Solution.h" />
     <ClInclude Include="Solver.h" />
   </ItemGroup>

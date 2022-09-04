@@ -3,9 +3,15 @@
 Data::Data(int)
 {
 	//TODO
+	//crate filename variable
 }
 
 void Data::read()
 {
-	//TODO
+	ifstream inFile;
+	inFile.open(filename);
+
+	//read specific data
+
+	inFile.close();
 }
