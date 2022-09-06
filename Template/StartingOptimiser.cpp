@@ -1,16 +1,22 @@
 #include "StartingOptimiser.h"
+#include "Parameters.h"
 
+//simulated annealing
+//Potenital problem : saving the best solution by doing copy too many times
+//Potenital solutions
+//-maybe just take copy at the end without saving in between
+//-store every swap and then just remember the index where the best result was 
+//and then just perform these swaps from the beginning
 void StartingOptimiser::optimise()
 {
 	int startTime = time(0);
-	const int endTime = 5 * 60;
 	int elapsed = 0;
 	Random rnd;
 	double bestScore = copy.get_score();
 	Solution bestSolution = copy;
-	while (elapsed <= endTime)
+	while (elapsed <= starting_optimisers_working_time)
 	{
-		double temperature = temperatureFunction(elapsed / endTime);
+		double temperature = temperatureFunction(elapsed / starting_optimisers_working_time);
 		double oldScore = copy.get_score();
 		Swap swp;
 		swp = copy.get_rand_swap(rnd);
@@ -28,8 +34,10 @@ void StartingOptimiser::optimise()
 		}
 		elapsed = time(0) - startTime;
 	}
+	copy = bestSolution;
 }
 
+//TODO testing
 double StartingOptimiser::temperatureFunction(double percentage)
 {
 	static double t = 1e9;
@@ -37,6 +45,7 @@ double StartingOptimiser::temperatureFunction(double percentage)
 	return t = t / (1 + a * t);
 }
 
+//TODO testing
 double StartingOptimiser::P(double oldScore, double newScore, double temp)
 {
 	if (newScore < oldScore)
