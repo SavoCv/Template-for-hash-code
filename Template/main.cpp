@@ -9,6 +9,7 @@
 #include "Parameters.h"
 #include "Optimiser.h"
 #include "BasicOptimiser.h"
+#include "StartingOptimiser.h"
 using namespace std;
 
 #define endl "\n"
@@ -98,10 +99,38 @@ Optimiser** create_optimisers(Solution& solution)
     return optimisers;
 }
 
+StartingOptimiser** create_starting_optimisers(Solution& solution)
+{
+    StartingOptimiser** optimisers;
+    optimisers = new StartingOptimiser * [num_of_optimisers];
+    optimisers[0] = new StartingOptimiser(solution);
+    optimisers[1] = new StartingOptimiser(solution);
+
+    return optimisers;
+}
+
+Solution wait_for_starting_optimisers(StartingOptimiser** optimisers)
+{
+    double best = 0;
+    int bestIndex = -1;
+    for (int i = 0; i < num_of_optimisers; i++)
+    {
+        if (bestIndex == -1 || optimisers[i]->getScore() < best)
+            bestIndex = i;
+    }
+
+    return optimisers[bestIndex]->getSolution();
+}
+
 void optimise(Solution& solution, int i)
 {
-    Optimiser** optimisers;
+    StartingOptimiser** sOptimisers = create_starting_optimisers(solution);
+    
+    Solution newOriginal = wait_for_starting_optimisers(sOptimisers);
+    //TODO
+    //ovo koristi kao novi original
 
+    Optimiser** optimisers;
     optimisers = create_optimisers(solution);
 
     for (int k = 0; k < time_for_each_case; ++k)

@@ -14,9 +14,16 @@ class StartingOptimiser : public Optimiser
 	double temperatureFunction(double percentage);
 
 	double P(double oldScore, double newScore, double temp);
-
 public:
 	StartingOptimiser(Solution& s);
 
 	void join();
+
+	Solution getSolution() {
+		return copy;
+	}
+
+	double getScore() {
+		return copy.get_score();
+	}
 };
