@@ -11,6 +11,7 @@ private:
 public:
 	Random();
 	int randomInt(int a, int b);
+	double randomDouble(double a, double b);
 	long long get_seed();
 	int nextInt();
 	double nextDouble();

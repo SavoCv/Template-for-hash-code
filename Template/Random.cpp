@@ -24,3 +24,14 @@ int Random::nextInt()
 	//TODO
 	return 0;
 }
+
+double Random::randomDouble(double a, double b)
+{
+	return 0;
+}
+double Random::nextDouble()
+{
+	mt19937::result_type random_number = udist(rng);
+
+	return (double)random_number / (double)1e18; // change 1e18 to some variable
+}
