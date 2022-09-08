@@ -19,6 +19,8 @@ typedef vector<int> vi;
 typedef long long ll;
 typedef pair<int, int> pii;
 
+const bool continue_from_last_solution = true;
+
 //broj testova
 const int num_of_tests = 6;
 
@@ -38,6 +40,8 @@ mutex output_mutex;
 bool is_interupted = false;
 
 const int max_num_of_optimisers = 100;
+
+time_t start_time_of_test_case;
 
 void set_i_begin_end(int& i_begin, int& i_end) // konacno
 {
@@ -68,6 +72,10 @@ Solution solve(const Data& d, int i) //konacno
 {
     Solution solution(i);
 
+    if (continue_from_last_solution)
+        if (solution.read())
+            return solution;
+
     Solver** solvers;
     solvers = create_solvers();
 
@@ -86,7 +94,7 @@ Solution solve(const Data& d, int i) //konacno
     return solution;
 }
 
-const int num_of_optimisers = 1;
+const int num_of_optimisers = 2;
 Optimiser** create_optimisers(Solution& solution)
 {
     Optimiser** optimisers;
@@ -104,14 +112,18 @@ void optimise(Solution& solution, int i)
 
     optimisers = create_optimisers(solution);
 
-    for (int k = 0; k < time_for_each_case; ++k)
+    for (int k = (int)(time(0) - start_time_of_test_case); k < time_for_each_case; ++k)
     {
         if (GetKeyState('S') & 0x8000)
         {
-            solution.lock_for_read();
+            solution.lock();
             solution.write();
-            solution.unlock_for_read();
+            solution.unlock();
             cout << "Saved" << endl;
+        }
+        if (GetKeyState('X') & 0x8000)
+        {
+            break;
         }
         this_thread::sleep_for(1000ms);
     }
@@ -128,13 +140,14 @@ void solve_all() //konacno
 {
     long long score = 0;
     Score opt = 0;
-    int pt = time(0);
+    time_t pt = time(0);
 
     int i_begin, i_end;
     set_i_begin_end(i_begin, i_end);
 
     for (int i = i_begin; i < i_end; i++)
     {
+        start_time_of_test_case = time(0);
         Data d(i);
         d.read();
 
@@ -164,7 +177,9 @@ int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-    srand(time(0));
+    cout.tie(nullptr);
+    cerr.tie(nullptr);
+    srand((unsigned) time(0));
     
     solve_all();
 
