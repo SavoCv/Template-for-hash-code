@@ -9,6 +9,7 @@
 #include "Parameters.h"
 #include "Optimiser.h"
 #include "BasicOptimiser.h"
+#include "StartingOptimiser.h"
 using namespace std;
 
 #define endl "\n"
@@ -33,6 +34,9 @@ const int time_for_each_case = 3;
 
 //Globalne promenljive
 mutex output_mutex;
+
+const int starting_optimisers_working_time = 500;
+const long long random_bound = 1e18;
 
 //Ovom promenljivom prekinuti sve cikluse sto pre
 bool is_interupted = false;
@@ -98,10 +102,41 @@ Optimiser** create_optimisers(Solution& solution)
     return optimisers;
 }
 
+const int num_of_starting_optimisers = 1;
+StartingOptimiser** create_starting_optimisers(Solution& solution)
+{
+    StartingOptimiser** optimisers;
+    optimisers = new StartingOptimiser * [num_of_optimisers];
+    optimisers[0] = new StartingOptimiser(solution);
+    optimisers[1] = new StartingOptimiser(solution);
+
+    return optimisers;
+}
+
+Solution wait_for_starting_optimisers(StartingOptimiser** optimisers)
+{
+    for (int i = 0; i < num_of_starting_optimisers; i++)
+        optimisers[i]->join();
+    double best = 0;
+    int bestIndex = -1;
+    for (int i = 0; i < num_of_starting_optimisers; i++)
+    {
+        if (bestIndex == -1 || optimisers[i]->getScore() < best)
+            bestIndex = i;
+    }
+
+    return optimisers[bestIndex]->getSolution();
+}
+
 void optimise(Solution& solution, int i)
 {
-    Optimiser** optimisers;
+    StartingOptimiser** sOptimisers = create_starting_optimisers(solution);
+    
+    Solution newOriginal = wait_for_starting_optimisers(sOptimisers);
+    //TODO
+    //ovo koristi kao novi original
 
+    Optimiser** optimisers;
     optimisers = create_optimisers(solution);
 
     for (int k = 0; k < time_for_each_case; ++k)

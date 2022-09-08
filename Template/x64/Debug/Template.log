@@ -15,8 +15,16 @@ C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\Random.cpp(6
 C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\Random.cpp(19,13): warning C4244: 'return': conversion from 'double' to '__int64', possible loss of data
   Solution.cpp
   main.cpp
-C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\main.cpp(131,12): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
-C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\main.cpp(167,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\StartingOptimiser.h(27,24): warning C4244: 'return': conversion from 'Score' to 'double', possible loss of data
+C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\main.cpp(166,12): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
+C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\main.cpp(202,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Solver.cpp
+  StartingOptimiser.cpp
+C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\StartingOptimiser.h(27,24): warning C4244: 'return': conversion from 'Score' to 'double', possible loss of data
+C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\StartingOptimiser.cpp(5,16): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
+C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\StartingOptimiser.cpp(9,19): warning C4244: 'initializing': conversion from 'Score' to 'double', possible loss of data
+C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\StartingOptimiser.cpp(14,19): warning C4244: 'initializing': conversion from 'Score' to 'double', possible loss of data
+C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\StartingOptimiser.cpp(18,19): warning C4244: 'initializing': conversion from 'Score' to 'double', possible loss of data
+C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\Template\StartingOptimiser.cpp(29,21): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
   Generating Code...
   Template.vcxproj -> C:\Users\Jelena\source\repos\SavoCv\Template-for-hash-code\x64\Debug\Template.exe
