@@ -5,7 +5,7 @@
 
 void BasicOptimiser::optimise()
 {
-    int pt = time(0);
+    time_t pt = time(0);
     Random rnd;
     Solution *tmp;
     int cnt = 0;
@@ -24,8 +24,8 @@ void BasicOptimiser::optimise()
                 tmp = new Solution(original);
             }
 
-            original.lock_for_write();
-            Score tmp_o_scr = original.get_score(), tmp_o_scr_after_swap;
+            original.lock();
+            Score tmp_o_scr = original.get_score();
             original.do_swap(swp);
             if (original.get_score() < tmp_o_scr) {
                 if (Solution::undo_exists)
@@ -37,7 +37,7 @@ void BasicOptimiser::optimise()
                 }
                 copy = original;
             }
-            original.unlock_for_write();
+            original.unlock();
         }
         //copy.unlock_for_write();
     }
@@ -45,6 +45,7 @@ void BasicOptimiser::optimise()
 
 BasicOptimiser::BasicOptimiser(Solution& solution) : original(solution), copy(solution), thr(&BasicOptimiser::optimise, this)
 {
+    copy.create_mutex();
 }
 
 

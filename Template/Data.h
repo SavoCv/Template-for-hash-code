@@ -9,6 +9,6 @@ private:
 	string filename;
 public:
 	Data(int);
-	void read();
+	void read(); // citanje iz fajla
 };
 

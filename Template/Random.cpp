@@ -1,10 +1,9 @@
 #include "Random.h"
-#include "Parameters.h"
-Random::Random() : udist(0,random_bound)
+
+Random::Random() : udist(0,1e18)
 {
 	//TODO
-	//get seed from somewhere
-	mt19937::result_type const seedval = get_seed(); 
+	mt19937::result_type const seedval = get_seed(); // get this from somewhere
 	rng.seed(seedval);
 }
 
@@ -24,15 +23,4 @@ int Random::nextInt()
 {
 	//TODO
 	return 0;
-}
-
-double Random::randomDouble(double a, double b)
-{
-	return 0;
-}
-double Random::nextDouble()
-{
-	mt19937::result_type random_number = udist(rng);
-
-	return (double)random_number / (double)random_bound; 
 }
