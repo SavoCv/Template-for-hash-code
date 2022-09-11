@@ -22,3 +22,8 @@ extern bool is_interupted;
 
 extern const int max_num_of_optimisers;
 
+//simulated annealing duration in seconds
+extern const int starting_optimisers_working_time;
+
+//random range bound
+extern const long long random_bound;
