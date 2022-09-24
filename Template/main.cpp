@@ -2,6 +2,7 @@
 #include <vector>
 #include <thread>
 #include <Windows.h>
+#include <iostream>
 #include "Data.h"
 #include "Solver.h"
 #include "BasicSolver.h"
@@ -131,7 +132,6 @@ Optimiser** create_optimisers(Solution& solution)
 void optimise(Solution& solution, int i)
 {
     StartingOptimiser** sOptimisers = create_starting_optimisers(solution);
-
     solution = wait_for_starting_optimisers(sOptimisers);
 
     Optimiser** optimisers;
