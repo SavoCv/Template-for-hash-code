@@ -1,2 +1,12 @@
-﻿  Solution.cpp
+﻿  BasicOptimiser.cpp
+  BasicSolver.cpp
+  Solution.cpp
+  Solver.cpp
+  StartingOptimiser.cpp
+C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\Template\StartingOptimiser.cpp(12,16): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
+C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\Template\StartingOptimiser.cpp(32,19): warning C4244: 'argument': conversion from 'Score' to 'double', possible loss of data
+C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\Template\StartingOptimiser.cpp(32,9): warning C4244: 'argument': conversion from 'Score' to 'double', possible loss of data
+C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\Template\StartingOptimiser.cpp(36,21): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+  main.cpp
+  Generating Code...
   Template.vcxproj -> C:\Users\savoc\Desktop\Savo\Programming\Takmicenja\Google Hash Code\Template\x64\Debug\Template.exe

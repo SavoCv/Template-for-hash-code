@@ -148,6 +148,7 @@
     <ClCompile Include="Solution.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Solver.cpp" />
+    <ClCompile Include="StartingOptimiser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicOptimiser.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Solution.h" />
     <ClInclude Include="Solver.h" />
+    <ClInclude Include="StartingOptimiser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

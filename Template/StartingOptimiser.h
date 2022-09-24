@@ -23,7 +23,7 @@ public:
 		return copy;
 	}
 
-	double getScore() {
+	Score getScore() {
 		return copy.get_score();
 	}
 };

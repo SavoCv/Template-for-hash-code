@@ -2,6 +2,7 @@
 #include <vector>
 #include <thread>
 #include <Windows.h>
+#include <iostream>
 #include "Data.h"
 #include "Solver.h"
 #include "BasicSolver.h"
@@ -11,14 +12,6 @@
 #include "BasicOptimiser.h"
 #include "StartingOptimiser.h"
 using namespace std;
-
-#define endl "\n"
-#define pb push_back
-#define mp make_pair
-#define MOD 1000000007
-typedef vector<int> vi;
-typedef long long ll;
-typedef pair<int, int> pii;
 
 const bool continue_from_last_solution = true;
 
@@ -32,13 +25,13 @@ const bool run_all = true;
 const int which_to_start = 2;
 
 //vreme u sekundama po svakom primeru
-const int time_for_each_case = 3;
+const int time_for_each_case = 10;
 
 //Globalne promenljive
 mutex output_mutex;
 
-const int starting_optimisers_working_time = 500;
-const long long random_bound = 1e18;
+const int starting_optimisers_working_time = 5;
+const long long random_bound = (long long) 1e18;
 
 //Ovom promenljivom prekinuti sve cikluse sto pre
 bool is_interupted = false;
@@ -98,7 +91,7 @@ Solution solve(const Data& d, int i) //konacno
     return solution;
 }
 
-const int num_of_starting_optimisers = 1;
+const int num_of_starting_optimisers = 2;
 StartingOptimiser** create_starting_optimisers(Solution& solution)
 {
     StartingOptimiser** optimisers;
@@ -113,11 +106,11 @@ Solution wait_for_starting_optimisers(StartingOptimiser** optimisers)
 {
     for (int i = 0; i < num_of_starting_optimisers; i++)
         optimisers[i]->join();
-    double best = 0;
+    Score best = 0;
     int bestIndex = -1;
     for (int i = 0; i < num_of_starting_optimisers; i++)
     {
-        if (bestIndex == -1 || optimisers[i]->getScore() < best)
+        if (bestIndex == -1 || optimisers[i]->getScore() > best)
             bestIndex = i;
     }
 
@@ -139,10 +132,8 @@ Optimiser** create_optimisers(Solution& solution)
 void optimise(Solution& solution, int i)
 {
     StartingOptimiser** sOptimisers = create_starting_optimisers(solution);
+    solution = wait_for_starting_optimisers(sOptimisers);
 
-    Solution newOriginal = wait_for_starting_optimisers(sOptimisers);
-    //TODO
-    //ovo koristi kao novi original
     Optimiser** optimisers;
 
     optimisers = create_optimisers(solution);

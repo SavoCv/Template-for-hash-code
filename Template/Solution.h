@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <mutex>
+#include <string>
 #include "Random.h"
 using namespace std;
 
@@ -18,7 +19,7 @@ class Solution
 public:
 
 	Solution(int case_id) : case_id(case_id), score(0), mtx(nullptr) {
-		filename = "output" + case_id + string(".txt");
+		filename = string("output") + to_string(case_id) + string(".txt");
 	}
 
 	bool is_better_than(const Solution&) const;
@@ -33,13 +34,12 @@ public:
 
 	void delete_mutex();
 
-	void lock(); // u optimiseru kada naidjemo resenje prvo lokujemo zatim proverimo da li je i dalje najbolje resenje i ako jeste onda izvrsimo swap pa onda unlokujemo
+	void lock();
 
 	void unlock();
 
 	void do_swap(Swap swp);
 
-	static const bool undo_exists = false;
 	void undo_swap(Swap swp);
 
 	Swap get_rand_swap(Random& rnd);
