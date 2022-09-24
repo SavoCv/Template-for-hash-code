@@ -12,21 +12,22 @@ void StartingOptimiser::optimise()
 	int startTime = time(0);
 	int elapsed = 0;
 	Random rnd;
-	double bestScore = copy.get_score();
+	Score bestScore = copy.get_score();
 	Solution bestSolution = copy;
 	while (elapsed <= starting_optimisers_working_time)
 	{
 		double temperature = temperatureFunction(elapsed / starting_optimisers_working_time);
-		double oldScore = copy.get_score();
+		Score oldScore = copy.get_score();
 		Swap swp;
 		swp = copy.get_rand_swap(rnd);
 		copy.do_swap(swp);
-		double newScore = copy.get_score();
-		if (oldScore < bestScore)
+		Score newScore = copy.get_score();
+		
+		/*if (oldScore < bestScore)
 		{
 			bestScore = oldScore;
 			bestSolution = copy;
-		}
+		}*/
 
 		if (P(oldScore, newScore, temperature) < rnd.nextDouble())
 		{
@@ -34,7 +35,7 @@ void StartingOptimiser::optimise()
 		}
 		elapsed = time(0) - startTime;
 	}
-	copy = bestSolution;
+	//copy = bestSolution;
 }
 
 //TODO testing

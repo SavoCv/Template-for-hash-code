@@ -1,6 +1,18 @@
 #pragma once
-#include <mutex>
 //Parametri i globalne promenljive, definisu se na pocetku main
+
+#include <mutex>
+#include <vector>
+#include <utility>
+using namespace std;
+
+//#define endl "\n"
+#define pb push_back
+#define mp make_pair
+#define MOD 1000000007
+typedef vector<int> vi;
+typedef long long ll;
+typedef pair<int, int> pii;
 
 //broj testova
 extern const int num_of_tests;
@@ -22,3 +34,6 @@ extern bool is_interupted;
 
 extern const int max_num_of_optimisers;
 
+extern const long long random_bound;
+
+extern const int starting_optimisers_working_time;
