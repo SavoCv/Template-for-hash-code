@@ -1,0 +1,1 @@
+Napraviti jos jedan optimiser koji ce koristiti scoreWithSwap i takodje napisati isti u Solution-u

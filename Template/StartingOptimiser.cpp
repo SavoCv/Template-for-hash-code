@@ -1,3 +1,5 @@
+#include <climits>
+#include <float.h>
 #include "StartingOptimiser.h"
 #include "Parameters.h"
 
@@ -17,6 +19,7 @@ void StartingOptimiser::optimise()
 	while (elapsed <= starting_optimisers_working_time)
 	{
 		double temperature = temperatureFunction(elapsed / starting_optimisers_working_time);
+		//cout << temperature << " ";
 		Score oldScore = copy.get_score();
 		Swap swp;
 		swp = copy.get_rand_swap(rnd);
@@ -29,6 +32,8 @@ void StartingOptimiser::optimise()
 			bestSolution = copy;
 		}*/
 
+
+		//cout << P(oldScore, newScore, temperature) << endl;
 		if (P(oldScore, newScore, temperature) < rnd.nextDouble())
 		{
 			copy.undo_swap(swp);
@@ -49,9 +54,11 @@ double StartingOptimiser::temperatureFunction(double percentage)
 //TODO testing
 double StartingOptimiser::P(double oldScore, double newScore, double temp)
 {
-	if (newScore < oldScore)
+	if (newScore > oldScore)
 		return 1;
-	
+	if (exp((oldScore - newScore) / temp) >= DBL_MAX)
+		return 0;
+	//if (temp < 1e-4) return 0;
 	return exp((oldScore - newScore)/temp);
 }
 

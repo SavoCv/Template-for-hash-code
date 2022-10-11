@@ -5,6 +5,6 @@
 class Solver
 {
 public:
-	virtual Solution solve(const Data& input_data) = 0;
+	virtual Solution solve(int case_id, const Data&) = 0;
 };
 

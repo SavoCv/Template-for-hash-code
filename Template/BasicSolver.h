@@ -4,6 +4,6 @@
 class BasicSolver : public Solver
 {
 public:
-	Solution solve(const Data& input_data);
+	Solution solve(int case_id, const Data& input_data);
 };
 

@@ -24,10 +24,15 @@ void BasicOptimiser::optimise()
             if (original.get_score() < tmp_o_scr) {
                 original.undo_swap(swp);
                 copy = original;
+                copy.setMainSolution(false);
+                //cout << "a" << endl;
             }
             original.unlock();
         }
+        else
+            copy.undo_swap(swp);
         //copy.unlock_for_write();
+        cnt++;
     }
 }
 

@@ -13,30 +13,31 @@
 #include "StartingOptimiser.h"
 using namespace std;
 
+mutex output_mutex;
+
 const bool continue_from_last_solution = true;
 
 //broj testova
 const int num_of_tests = 6;
 
 //da li se pokrece za sve
-const bool run_all = true;
+const bool run_all = false;
 
 //ako se ne pokrece za sve za koji se pokrece
-const int which_to_start = 2;
+const int which_to_start = 5;
 
 //vreme u sekundama po svakom primeru
-const int time_for_each_case = 10;
+const int time_for_each_case = 2*60;
 
-//Globalne promenljive
-mutex output_mutex;
-
-const int starting_optimisers_working_time = 5;
+const int starting_optimisers_working_time = 2 * 60;
 const long long random_bound = (long long) 1e18;
 
 //Ovom promenljivom prekinuti sve cikluse sto pre
 bool is_interupted = false;
 
 const int max_num_of_optimisers = 100;
+
+const int period_of_displaying_score = 5;
 
 time_t start_time_of_test_case;
 
@@ -67,19 +68,22 @@ Solver** create_solvers() //menjati
 
 Solution solve(const Data& d, int i) //konacno
 {
-    Solution solution(i);
+    Solution solution(i, d);
 
     if (continue_from_last_solution)
         if (solution.read())
             return solution;
+        else
+            cerr << "Can't read last solution" << endl;
 
     Solver** solvers;
     solvers = create_solvers();
 
-    for (int j = 0; j < num_of_solvers; ++j)
+    solution = solvers[0]->solve(i, d);
+    for (int j = 1; j < num_of_solvers; ++j)
     {
-        Solution tmp_solution(i);
-        tmp_solution = solvers[j]->solve(d);
+        Solution tmp_solution(i, d);
+        tmp_solution = solvers[j]->solve(i, d);
         if (tmp_solution.is_better_than(solution))
             swap(solution, tmp_solution);
     }
@@ -91,13 +95,14 @@ Solution solve(const Data& d, int i) //konacno
     return solution;
 }
 
-const int num_of_starting_optimisers = 2;
+const int num_of_starting_optimisers = 4;
 StartingOptimiser** create_starting_optimisers(Solution& solution)
 {
     StartingOptimiser** optimisers;
     optimisers = new StartingOptimiser * [num_of_starting_optimisers];
-    optimisers[0] = new StartingOptimiser(solution);
-    optimisers[1] = new StartingOptimiser(solution);
+    for(int i = 0; i < num_of_starting_optimisers; ++i)
+        optimisers[i] = new StartingOptimiser(solution);
+    optimisers[0]->setMainSolution(true);
 
     return optimisers;
 }
@@ -110,20 +115,27 @@ Solution wait_for_starting_optimisers(StartingOptimiser** optimisers)
     int bestIndex = -1;
     for (int i = 0; i < num_of_starting_optimisers; i++)
     {
-        if (bestIndex == -1 || optimisers[i]->getScore() > best)
+        Score tmp = optimisers[i]->getScore();
+        cout << "Score from " << i << ". starting optimiser: " << tmp << endl;
+        if (bestIndex == -1 || tmp > best) {
             bestIndex = i;
+            best = tmp;
+        }
     }
+    cout << endl;
 
     return optimisers[bestIndex]->getSolution();
 }
 
-const int num_of_optimisers = 2;
+const int num_of_optimisers = 4;
 Optimiser** create_optimisers(Solution& solution)
 {
     Optimiser** optimisers;
     optimisers = new Optimiser * [num_of_optimisers];
-    optimisers[0] = new BasicOptimiser(solution);
-    optimisers[1] = new BasicOptimiser(solution);
+    const int num_of_BasicOptimisers = 4;
+    for(int i = 0; i < num_of_BasicOptimisers; ++i)
+        optimisers[i] = new BasicOptimiser(solution);
+
     //Dodati ako postoje jos optimisera
 
     return optimisers;
@@ -131,24 +143,35 @@ Optimiser** create_optimisers(Solution& solution)
 
 void optimise(Solution& solution, int i)
 {
-    StartingOptimiser** sOptimisers = create_starting_optimisers(solution);
-    solution = wait_for_starting_optimisers(sOptimisers);
+    Score poc_score = solution.get_score(), tmp_scr;
+
+    if (starting_optimisers_working_time > 0) {
+        StartingOptimiser** sOptimisers = create_starting_optimisers(solution);
+        solution = wait_for_starting_optimisers(sOptimisers);
+    }
+
+    cout << "Score after starting optimisers: " << (tmp_scr = solution.get_score()) << endl;
 
     Optimiser** optimisers;
 
     optimisers = create_optimisers(solution);
 
+    solution.setMainSolution(true);
+
     for (int k = (int)(time(0) - start_time_of_test_case); k < time_for_each_case; ++k)
     {
+        string tmp;
         if (GetKeyState('S') & 0x8000)
         {
             solution.lock();
             solution.write();
             solution.unlock();
+            cin >> tmp;
             cout << "Saved" << endl;
         }
         if (GetKeyState('X') & 0x8000)
         {
+            cin >> tmp;
             break;
         }
         this_thread::sleep_for(1000ms);
@@ -160,6 +183,9 @@ void optimise(Solution& solution, int i)
 
     for (int j = 0; j < num_of_optimisers; ++j)
         delete optimisers[j];
+    cout << endl;
+    cout << "Optimizovano sa StartingOptimiserom: " << tmp_scr - poc_score << endl;
+    cout << "Optimizovano sa Optimiserom: " << solution.get_score() - tmp_scr << endl;
 }
 
 void solve_all() //konacno
@@ -188,7 +214,7 @@ void solve_all() //konacno
         solution.write();
 
         Score fin_scr = solution.get_score();
-        cout << i << "Optimizovano: " << fin_scr - score_bf_opt << endl;
+        cout << i << ". optimizovano: " << fin_scr - score_bf_opt << endl;
         opt += fin_scr - score_bf_opt;
         cout << i << ". score: " << fin_scr << endl;
         score += fin_scr;
@@ -207,7 +233,7 @@ int main()
     cout.tie(nullptr);
     cerr.tie(nullptr);
     srand((unsigned) time(0));
-    
+
     solve_all();
 
     return 0;

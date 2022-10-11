@@ -26,4 +26,6 @@ public:
 	Score getScore() {
 		return copy.get_score();
 	}
+
+	void setMainSolution(bool m) { copy.setMainSolution(m); }
 };

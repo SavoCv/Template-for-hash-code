@@ -1,4 +1,5 @@
 //#include <iostream>
+#include <thread>
 #include "Random.h"
 #include "Parameters.h"
 
@@ -17,7 +18,8 @@ int Random::randomInt(int a, int b)
 
 long long Random::get_seed()
 {
-	return rand();
+	hash <thread::id> hasher;
+	return rand() * (long long) hasher(this_thread::get_id());
 }
 
 double Random::randomDouble(double a, double b)
